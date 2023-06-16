@@ -18,7 +18,7 @@ class SuperKeyboard:
                 buttons = []
                 for button in keyboard_row:
                     buttons.append(button.get_button(language_code))
-                keyboard.row(keyboard_row)
+                keyboard.row(*buttons)
             return keyboard.as_markup()
         else:
             keyboard = ReplyKeyboardBuilder()
@@ -26,5 +26,5 @@ class SuperKeyboard:
                 buttons = []
                 for button in keyboard_row:
                     buttons.append(button.get_button(language_code))
-                keyboard.row(keyboard_row)
+                keyboard.row(*buttons)
             return keyboard.as_markup()

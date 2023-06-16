@@ -29,5 +29,7 @@ class SuperButton:
                 return InlineKeyboardButton(text=text, callback_data=self.callback_data)
             elif self.url is not None:
                 return InlineKeyboardButton(text=text, callback_data=self.url)
+            else:
+                raise "NoFunctions"
         else:
             return KeyboardButton(text=text)

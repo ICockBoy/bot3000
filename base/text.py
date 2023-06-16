@@ -9,7 +9,7 @@ class SuperText:
     def get(self, language_code):
         for language_text in self.languages_text:
             if language_text.get_language() == language_code:
-                return language_text.get_language()
+                return language_text.get_text()
                 break
         else:
             for language_text in self.languages_text:
