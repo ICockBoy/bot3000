@@ -6,7 +6,7 @@ from base.text import SuperText
 class SuperButton:
     def __init__(self,
                  text: SuperText,
-                 button_type: InlineKeyboardButton | KeyboardButton = InlineKeyboardButton,
+                 button_type: str = "InlineKeyboardButton",
                  callback_data: None | str = None,
                  url: None | str = None, **kwargs):
         """
@@ -24,7 +24,7 @@ class SuperButton:
 
     def get_button(self, language_code):
         text = self.text.get(language_code)
-        if self.button_type == InlineKeyboardButton:
+        if self.button_type == "InlineKeyboardButton":
             if self.callback_data is not None:
                 return InlineKeyboardButton(text=text, callback_data=self.callback_data)
             elif self.url is not None:

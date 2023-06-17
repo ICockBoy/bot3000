@@ -13,7 +13,9 @@ class Start:
 
     start_button1 = SuperButton(SuperText([LanguageText("en", "IDI NAHUI"),
                                            LanguageText("ru", "Здарова заебал")]),
-                                KeyboardButton)
-    start_keyboard = SuperKeyboard([[start_button1]], ReplyKeyboardMarkup)
+                                callback_data="sex"
+                                )
+    start_button2 = InlineKeyboardButton(text="text", callback_data="self.callback_data")
+    start_keyboard = SuperKeyboard([[start_button1], [start_button2]])
     start = SuperState(start_text,
                        start_keyboard)
