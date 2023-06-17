@@ -10,4 +10,7 @@ start = Router()
 
 @start.message(Command("start"))
 async def start_command(message: Message, state: FSMContext):
-    await start_state.start.answer(message)
+    await start_state.start_message.answer(message,
+                                           state,
+                                           format_text=[message.from_user.first_name],
+                                           format_button_text_0=["нахуй"])

@@ -22,13 +22,21 @@ class SuperButton:
         self.url = url
         self.kwargs = kwargs
 
-    def get_button(self, language_code):
+    def get(self, language_code, format_text=None, format_callback=None, format_url=None):
         text = self.text.get(language_code)
+        callback_data = self.callback_data
+        url = self.url
+        if format_text is not None:
+            text = text.format(*format_text)
+        if format_callback is not None:
+            callback_data = callback_data.format(*format_callback)
+        if format_url is not None:
+            url = url.format(*format_url)
         if self.button_type == "InlineKeyboardButton":
             if self.callback_data is not None:
-                return InlineKeyboardButton(text=text, callback_data=self.callback_data)
+                return InlineKeyboardButton(text=text, callback_data=callback_data)
             elif self.url is not None:
-                return InlineKeyboardButton(text=text, callback_data=self.url)
+                return InlineKeyboardButton(text=text, url=url)
             else:
                 raise "NoFunctions"
         else:
