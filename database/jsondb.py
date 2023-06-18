@@ -10,10 +10,9 @@ class JSONDATABASE:
         :param json_file: Path to json database file
         """
         self.filedb = json_file.replace("\\", "/")
-
         if not os.path.isfile(self.filedb):
-            if not os.path.exists("".join(self.filedb.split("/")[:-1])):
-                os.makedirs("".join(self.filedb.split("/")[:-1]))
+            if not os.path.exists("/".join(self.filedb.rsplit("/")[:-1])):
+                os.makedirs("/".join(self.filedb.rsplit("/")[:-1]))
             self.write({})
 
     @staticmethod
