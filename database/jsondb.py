@@ -5,21 +5,16 @@ from typing import Any
 
 
 class JSONDATABASE:
-    def __init__(self, json_file: str, options="c"):
+    def __init__(self, json_file: str):
         """
         :param json_file: Path to json database file
-        :param options: c:clear database, e:raise error, p:print error
         """
         self.filedb = json_file.replace("\\", "/")
-        self.options = options
+
         if not os.path.isfile(self.filedb):
-            if self.options == "c":
-                if not os.path.exists("".join(self.filedb.split("/")[:-1])):
-                    os.makedirs("".join(self.filedb.split("/")[:-1]))
-            elif self.options == "e":
-                raise FileNotFoundError
-            elif self.options == "p":
-                print(FileNotFoundError)
+            if not os.path.exists("".join(self.filedb.split("/")[:-1])):
+                os.makedirs("".join(self.filedb.split("/")[:-1]))
+            self.write({})
 
     @staticmethod
     def is_jsonable(x):
@@ -29,19 +24,26 @@ class JSONDATABASE:
         except JSONDecodeError:
             return False
 
-    def find(self, attribute: str):
-        pass
-
-    def write(self, attributes: list[str], param: Any):
+    def write(self, db_dict: dict):
         with open(self.filedb, "w+") as filedb_stream:
-            if not self.is_jsonable(filedb_stream.read()):
-                if self.options == "c":
-                    filedb_stream.write(json.dumps({}))
-                elif self.options == "e":
-                    raise JSONDecodeError
-                elif self.options == "p":
-                    print(JSONDecodeError)
-            db = json.load(filedb_stream)
+            filedb_stream.write(json.dumps(db_dict))
 
+    def read(self):
+        with open(self.filedb) as filedb_stream:
+            read = filedb_stream.read()
+            if self.is_jsonable(read):
+                return json.loads(read)
+            else:
+                return {}
 
-JSONDATABASE("static/database.json")
+    def save_field(self, field: str, value: dict):
+        read = self.read()
+        read[field] = value
+        self.write(read)
+
+    def get_field(self, field: str):
+        read = self.read()
+        if field in read:
+            return read[field]
+        else:
+            return {}
